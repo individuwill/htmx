@@ -3232,7 +3232,7 @@ return (function () {
             xhr.timeout = requestConfig.timeout;
 
             // request headers
-            if (requestAttrValues.noHeaders) {
+            if (requestAttrValues.noHeaders || requestAttrValues.simpleRequest) {
                 // ignore all headers
             } else {
                 for (var header in headers) {
@@ -3311,8 +3311,16 @@ return (function () {
             var indicators = addRequestIndicatorClasses(elt);
             var disableElts = disableElements(elt);
 
+            var eventTargets = [xhr];
+            if(requestAttrValues.simpleRequest) {
+                // only register events on the xhr object
+            } else {
+                // default behavior is to register events on both the xhr and the xhr.upload
+                eventTargets.push(xhr.upload);
+            }
+
             forEach(['loadstart', 'loadend', 'progress', 'abort'], function(eventName) {
-                forEach([xhr, xhr.upload], function (target) {
+                forEach(eventTargets, function (target) {
                     target.addEventListener(eventName, function(event){
                         triggerEvent(elt, "htmx:xhr:" + eventName, {
                             lengthComputable:event.lengthComputable,
