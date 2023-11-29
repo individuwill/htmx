@@ -7,6 +7,7 @@ The `hx-request` attribute allows you to configure various aspects of the reques
 * `timeout` - the timeout for the request, in milliseconds
 * `credentials` - if the request will send credentials
 * `noHeaders` - strips all headers from the request
+* `simpleRequest` - used to avoid CORS preflight check, and CORS issues for simple requests
 
 These attributes are set using a JSON-like syntax:
 

@@ -910,6 +910,14 @@ on the client side.
 
 [See all the request and response headers that htmx implements.](@/reference.md#request_headers)
 
+For simple requests it's possible to avoid triggering a CORS preflight check by not sending custom headers and by not registering some event handlers. This is useful when the server does not properly respond to the HTTP `OPTIONS` method for the endpoint or to avoid enabling this method on your own server endpoint. This is also slightly more efficient (1 request to the endpoint instead of 2). Avoiding triggering the CORS preflight check can be accomplished by using the `hx-request` attribute like this
+
+```html
+<div hx-get="https://example.com"
+    hx-request='{"simpleRequest": true}'>
+</div>
+```
+
 ### Request Headers
 
 htmx includes a number of useful headers in requests:
